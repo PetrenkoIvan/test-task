@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { faker } from '@faker-js/faker';
 import { Product } from 'models/product';
@@ -13,6 +13,12 @@ export class ProductsService {
   ) {}
 
   async createProduct(productDto: ProductDto) {
+    if (!productDto.name.trim() || !productDto.description.trim()) {
+      throw new HttpException(
+        'All fields must be filled in',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     const newProduct = await this.productModel.create({
       id: faker.datatype.uuid(),
       name: productDto.name,

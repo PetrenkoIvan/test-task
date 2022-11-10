@@ -32,6 +32,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "csv-parse": "^5.3.2",
+    "multiformats": "^9.9.0",
     "password-validate": "^0.0.2",
     "password-validator": "^5.3.0",
     "pg": "^8.8.0",
@@ -39,7 +40,8 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "sequelize": "^6.25.5",
-    "sequelize-typescript": "^2.1.5"
+    "sequelize-typescript": "^2.1.5",
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",

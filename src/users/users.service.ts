@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+import * as bcrypt from 'bcrypt';
 import { User } from 'models/user';
-import { EditUserDto } from 'src/dtos/editUser.dto';
 import { UserDto } from 'src/dtos/user.dto';
 
 @Injectable()
@@ -63,9 +63,11 @@ export class UsersService {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
     if (password['password'].trim()) {
+      const hashedPassword = await bcrypt.hash(password['password'], 5);
+
       await this.userModel.update(
         {
-          password,
+          password: hashedPassword,
         },
         { where: { id } },
       );
