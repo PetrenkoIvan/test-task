@@ -58,18 +58,23 @@ export class AuthorizationService {
     const userInfo = await this.userService.getUserByUserName(
       loginDto.userName,
     );
+    if (!userInfo) {
+      throw new UnauthorizedException({
+        message: 'Invalid userName',
+      });
+    }
+
     const checkPassword = await bcrypt.compare(
       loginDto.password,
       userInfo.password,
     );
 
-    if (userInfo && checkPassword) {
-      return userInfo;
-    } else {
+    if (!checkPassword) {
       throw new UnauthorizedException({
-        message: 'Invalid userName or password',
+        message: 'Invalid password',
       });
     }
+    return userInfo;
   }
 
   async generateToken(user: User) {
